@@ -26,7 +26,7 @@ func (p *Parser) Walk(root *template.Template) error {
 			return nil
 		}
 
-		var temp *template.Template = root.New(entry.Name())
+		var temp *template.Template = root.New(filepath.Clean(path))
 
 		f, err := os.Open(path)
 		if err != nil {

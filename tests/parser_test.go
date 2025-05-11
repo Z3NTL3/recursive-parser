@@ -2,28 +2,26 @@ package recursive_parser_test
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
-	"os"
-	"path"
 	"testing"
 
 	recursive_parser "github.com/Z3NTL3/recursive-parser"
 )
 
 func TestRecursiveTempParser(t *testing.T) {
-	cwd, err := os.Getwd()
-	if err != nil {
-		t.Fatal(err)
-	}
-	p := recursive_parser.New(path.Join(cwd, "data")) // views dir
+	p := recursive_parser.New("data") // views dir
 	temp := template.New("views")
 
 	if err := p.Walk(temp); err != nil {
 		t.Fatal(err)
 	}
 
+	for _, t := range temp.Templates() {
+		fmt.Println(t.Name())
+	}
 	var out bytes.Buffer
-	if err := temp.ExecuteTemplate(&out, "hello.html", map[string]string{"title": "yolo"}); err != nil {
+	if err := temp.ExecuteTemplate(&out, "data\\hello.html", map[string]string{"title": "yolo"}); err != nil {
 		t.Fatal(err)
 	}
 
