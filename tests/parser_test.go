@@ -21,7 +21,7 @@ func TestRecursiveTempParser(t *testing.T) {
 		fmt.Println(t.Name())
 	}
 	var out bytes.Buffer
-	if err := temp.ExecuteTemplate(&out, "data\\hello.html", map[string]string{"title": "yolo"}); err != nil {
+	if err := temp.ExecuteTemplate(&out, "data/hello.html", map[string]string{"title": "yolo"}); err != nil {
 		t.Fatal(err)
 	}
 

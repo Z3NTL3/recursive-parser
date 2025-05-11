@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type Parser struct {
@@ -26,7 +27,8 @@ func (p *Parser) Walk(root *template.Template) error {
 			return nil
 		}
 
-		var temp *template.Template = root.New(filepath.Clean(path))
+		sanitized := strings.ReplaceAll(filepath.Clean(path), `\`, `/`)
+		var temp *template.Template = root.New(sanitized)
 
 		f, err := os.Open(path)
 		if err != nil {
